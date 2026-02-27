@@ -1,0 +1,100 @@
+package ru.iu3.fclient;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import java.text.DecimalFormat;
+
+public class PinpadActivity extends AppCompatActivity {
+
+    TextView tvPin;
+    String pin = "";
+    final int MAX_KEYS = 10;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pinpad);
+
+        // Ссылка на текстовое поле для отображения PIN
+        tvPin = findViewById(R.id.txtPin);
+
+        TextView ta = findViewById(R.id.txtAmount);
+        String amt = String.valueOf(getIntent().getStringExtra("amount"));
+        Long f = Long.valueOf(amt);
+        DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
+        String s = df.format(f);
+        ta.setText("Сумма: " + s);
+
+        TextView tp = findViewById(R.id.txtPtc);
+        int pts = getIntent().getIntExtra("ptc", 0);
+        if (pts == 2)
+            tp.setText("Осталось две попытки");
+        else if (pts == 1)
+            tp.setText("Осталась одна попытка");
+        // Перемешиваем клавиши при старте
+
+        ShuffleKeys();
+
+        // Обработчик кнопки OK
+        findViewById(R.id.btnOK).setOnClickListener((View) -> {
+            Intent it = new Intent();
+            it.putExtra("pin", pin);
+            setResult(RESULT_OK, it);
+            finish();
+        });
+
+        // Обработчик кнопки Reset (C)
+        findViewById(R.id.btnReset).setOnClickListener((View) -> {
+            pin = "";
+            tvPin.setText("");
+        });
+    }
+
+    /**
+     * Обработчик нажатия на цифровые клавиши (0-9)
+     */
+    public void keyClick(View v) {
+        String key = ((TextView) v).getText().toString();
+        int sz = pin.length();
+
+        // Запрещаем вводить PIN длиннее 4 символов
+        if (sz < 4) {
+            pin += key;
+            // Рисуем звёздочки вместо цифр
+            tvPin.setText("****".substring(4 - pin.length()));
+        }
+    }
+
+    /**
+     * Перемешивает цифровые клавиши с помощью случайных чисел из mbedtls
+     */
+    protected void ShuffleKeys()
+    {
+        Button keys[] = new Button[] {
+                findViewById(R.id.btnKey0),
+                findViewById(R.id.btnKey1),
+                findViewById(R.id.btnKey2),
+                findViewById(R.id.btnKey3),
+                findViewById(R.id.btnKey4),
+                findViewById(R.id.btnKey5),
+                findViewById(R.id.btnKey6),
+                findViewById(R.id.btnKey7),
+                findViewById(R.id.btnKey8),
+                findViewById(R.id.btnKey9),
+        };
+
+        byte[] rnd = MainActivity.randomBytes(MAX_KEYS);
+        for(int i = 0; i < MAX_KEYS; i++)
+        {
+            int idx = (rnd[i] & 0xFF) % 10;
+            CharSequence txt = keys[idx].getText();
+            keys[idx].setText(keys[i].getText());
+            keys[i].setText(txt);
+        }
+    }
+}
