@@ -1,0 +1,2 @@
+/Users/aleksandrpalkin/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar qc libeverest.a CMakeFiles/everest.dir/library/everest.c.o CMakeFiles/everest.dir/library/x25519.c.o CMakeFiles/everest.dir/library/Hacl_Curve25519_joined.c.o
+/Users/aleksandrpalkin/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib libeverest.a

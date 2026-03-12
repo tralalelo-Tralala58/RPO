@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/spdlog/build/x86_64/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/spdlog/build/x86_64/example/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

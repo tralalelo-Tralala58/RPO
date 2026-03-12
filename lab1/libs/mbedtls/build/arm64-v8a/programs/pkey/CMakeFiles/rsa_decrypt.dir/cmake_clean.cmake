@@ -1,0 +1,12 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/rsa_decrypt.dir/link.d"
+  "CMakeFiles/rsa_decrypt.dir/rsa_decrypt.c.o"
+  "CMakeFiles/rsa_decrypt.dir/rsa_decrypt.c.o.d"
+  "rsa_decrypt"
+  "rsa_decrypt.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/rsa_decrypt.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

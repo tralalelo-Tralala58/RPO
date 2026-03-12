@@ -1,0 +1,26 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/framework/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/include/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/3rdparty/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/3rdparty/everest/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/3rdparty/p256-m/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/library/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/pkgconfig/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/aes/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/cipher/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/fuzz/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/hash/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/pkey/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/psa/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/random/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/ssl/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/test/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/util/cmake_install.cmake",
+		"/Users/aleksandrpalkin/AndroidStudioProjects/libs/mbedtls/build/arm64-v8a/programs/x509/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
