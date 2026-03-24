@@ -1,0 +1,52 @@
+-- +goose Up
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    is_admin BOOLEAN DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS terminals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    serial_number TEXT UNIQUE NOT NULL,
+    address TEXT,
+    name TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS keys (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    key_value TEXT NOT NULL,
+    description TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS cards (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    card_number TEXT UNIQUE NOT NULL,
+    balance REAL DEFAULT 0.0,
+    is_locked BOOLEAN DEFAULT 0,
+    owner_name TEXT,
+    key_id INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (key_id) REFERENCES keys(id)
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount REAL NOT NULL,
+    card_id INTEGER NOT NULL,
+    terminal_id INTEGER NOT NULL,
+    transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (card_id) REFERENCES cards(id),
+    FOREIGN KEY (terminal_id) REFERENCES terminals(id)
+);
+
+-- +goose Down
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS keys;
+DROP TABLE IF EXISTS terminals;
+DROP TABLE IF EXISTS users;
