@@ -1,0 +1,97 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #e7ecf3;
+  background: #0f172a;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: linear-gradient(180deg, #0f172a, #111827); }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+input {
+  width: 100%; padding: 0.8rem 0.95rem; border-radius: 12px; border: 1px solid #334155;
+  background: #0b1220; color: #e7ecf3;
+}
+label { display: grid; gap: 0.45rem; }
+h1, h2, h3, p { margin-top: 0; }
+
+.auth-page, .content-area { min-height: 100vh; }
+.auth-page {
+  display: grid; place-items: center; padding: 2rem;
+}
+.auth-card, .card-section, .info-card {
+  background: rgba(15, 23, 42, 0.92); border: 1px solid #23314d; border-radius: 24px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+.auth-card {
+  width: min(460px, 100%); padding: 2rem; display: grid; gap: 1rem;
+}
+.brand-label { color: #60a5fa; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
+.primary-button, .ghost-button, .table-button {
+  border: none; border-radius: 12px; padding: 0.8rem 1rem; cursor: pointer;
+}
+.primary-button { background: #2563eb; color: white; }
+.ghost-button { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+.table-button { background: #1e293b; color: #e2e8f0; margin-right: 0.5rem; }
+.table-button.danger { background: #7f1d1d; }
+.full-width { width: 100%; }
+.alert { padding: 0.9rem 1rem; border-radius: 14px; }
+.alert.error { background: rgba(127, 29, 29, 0.25); border: 1px solid #ef4444; }
+.alert.success { background: rgba(21, 128, 61, 0.2); border: 1px solid #22c55e; }
+
+.app-shell { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+.sidebar {
+  padding: 1.5rem; border-right: 1px solid #22314b; display: flex; flex-direction: column; justify-content: space-between;
+  background: rgba(2, 6, 23, 0.95); position: sticky; top: 0; height: 100vh;
+}
+.brand-block { margin-bottom: 1.5rem; }
+.nav-menu { display: grid; gap: 0.55rem; }
+.nav-link {
+  padding: 0.9rem 1rem; border-radius: 14px; color: #cbd5e1; background: transparent; border: 1px solid transparent;
+}
+.nav-link.active, .nav-link:hover { background: #172033; border-color: #2d3c57; color: white; }
+.content-area { padding: 2rem; }
+.page-header { margin-bottom: 1.5rem; }
+.page-header p { color: #94a3b8; max-width: 720px; }
+.stats-grid, .two-columns { display: grid; gap: 1rem; }
+.stats-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 1rem; }
+.info-card, .card-section { padding: 1.25rem; }
+.card-section { margin-bottom: 1rem; }
+.entity-form { display: grid; gap: 1rem; margin-bottom: 1rem; }
+.grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.form-actions { display: flex; gap: 0.75rem; align-items: center; }
+.checkbox-field { display: flex; align-items: center; gap: 0.75rem; }
+.checkbox-field input { width: 20px; height: 20px; }
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 0.9rem 0.7rem; border-bottom: 1px solid #22314b; text-align: left; }
+th { color: #93c5fd; font-weight: 600; }
+.empty-cell { text-align: center; color: #94a3b8; }
+.actions-cell { white-space: nowrap; }
+.keys-list { display: grid; gap: 0.75rem; margin-top: 1rem; }
+.key-item { display: grid; gap: 0.25rem; padding: 0.8rem; border: 1px solid #2b3a54; border-radius: 14px; }
+.muted { color: #94a3b8; }
+
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; }
+  .two-columns { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 901px) {
+  .two-columns { grid-template-columns: 1fr 1fr; }
+}
+.section-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.alert.warning { background: rgba(234, 179, 8, 0.15); border: 1px solid #eab308; color: #fde68a; margin-bottom: 1rem; }
+.user-chip {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #2d3c57;
+  border-radius: 14px;
+  background: #0b1220;
+  color: #cbd5e1;
+}
+.user-chip strong { color: #93c5fd; font-size: 0.85rem; }
+.section-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }

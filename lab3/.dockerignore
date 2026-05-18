@@ -1,0 +1,16 @@
+.git
+.DS_Store
+**/.DS_Store
+
+# Go/local runtime artifacts
+data/*.db
+data/*.db-*
+*.log
+
+# Frontend local artifacts
+frontend/node_modules
+frontend/dist
+node_modules
+dist
+*.tsbuildinfo
+frontend/*.tsbuildinfo

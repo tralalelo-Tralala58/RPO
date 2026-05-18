@@ -1,0 +1,698 @@
+basePath: /api/v1
+definitions:
+  models.AuthResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  models.Card:
+    properties:
+      balance:
+        type: number
+      card_number:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_locked:
+        type: boolean
+      key_id:
+        type: integer
+      owner_name:
+        type: string
+    required:
+    - card_number
+    type: object
+  models.Key:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      key_value:
+        type: string
+    required:
+    - key_value
+    type: object
+  models.LoginRequest:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    required:
+    - login
+    - password
+    type: object
+  models.Terminal:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      serial_number:
+        type: string
+    required:
+    - serial_number
+    type: object
+  models.TerminalAuthRequest:
+    properties:
+      amount:
+        type: number
+      card_number:
+        type: string
+      terminal_sn:
+        type: string
+    required:
+    - amount
+    - card_number
+    - terminal_sn
+    type: object
+  models.TerminalAuthResponse:
+    properties:
+      authorized:
+        type: boolean
+      message:
+        type: string
+    type: object
+  models.Transaction:
+    properties:
+      amount:
+        type: number
+      card_id:
+        type: integer
+      id:
+        type: integer
+      terminal_id:
+        type: integer
+      transaction_date:
+        type: string
+    required:
+    - amount
+    - card_id
+    - terminal_id
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_admin:
+        type: boolean
+      login:
+        type: string
+      name:
+        type: string
+      password:
+        description: ← Для ввода пароля (при создании)
+        type: string
+    required:
+    - login
+    - name
+    type: object
+host: localhost:8888
+info:
+  contact: {}
+  title: Payment Auth API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Логин и пароль
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+      summary: Авторизация пользователя
+      tags:
+      - Auth
+  /cards:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Card'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Получить список карт
+      tags:
+      - Cards
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные карты
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Card'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Card'
+      security:
+      - BearerAuth: []
+      summary: Создать карту
+      tags:
+      - Cards
+  /cards/{id}:
+    delete:
+      parameters:
+      - description: ID карты
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить карту
+      tags:
+      - Cards
+    get:
+      parameters:
+      - description: ID карты
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Card'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить карту по ID
+      tags:
+      - Cards
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID карты
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные карты
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Card'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Card'
+      security:
+      - BearerAuth: []
+      summary: Обновить карту
+      tags:
+      - Cards
+  /keys:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Key'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Получить список ключей
+      tags:
+      - Keys
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные ключа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Key'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Key'
+      security:
+      - BearerAuth: []
+      summary: Создать ключ
+      tags:
+      - Keys
+  /keys/{id}:
+    delete:
+      parameters:
+      - description: ID ключа
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить ключ
+      tags:
+      - Keys
+    get:
+      parameters:
+      - description: ID ключа
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Key'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить ключ по ID
+      tags:
+      - Keys
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID ключа
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные ключа
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Key'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Key'
+      security:
+      - BearerAuth: []
+      summary: Обновить ключ
+      tags:
+      - Keys
+  /terminal/authorize:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные транзакции
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.TerminalAuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TerminalAuthResponse'
+      security:
+      - BearerAuth: []
+      summary: Авторизация транзакции терминалом
+      tags:
+      - Terminal
+  /terminal/keys:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Key'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Загрузка ключей для терминала
+      tags:
+      - Terminal
+  /terminals:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Terminal'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Получить список терминалов
+      tags:
+      - Terminals
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные терминала
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Terminal'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Terminal'
+      security:
+      - BearerAuth: []
+      summary: Создать терминал
+      tags:
+      - Terminals
+  /terminals/{id}:
+    delete:
+      parameters:
+      - description: ID терминала
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить терминал
+      tags:
+      - Terminals
+    get:
+      parameters:
+      - description: ID терминала
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Terminal'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить терминал по ID
+      tags:
+      - Terminals
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID терминала
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные терминала
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Terminal'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Terminal'
+      security:
+      - BearerAuth: []
+      summary: Обновить терминал
+      tags:
+      - Terminals
+  /transactions:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Transaction'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Получить список транзакций
+      tags:
+      - Transactions
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные транзакции
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Transaction'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Transaction'
+      security:
+      - BearerAuth: []
+      summary: Создать транзакцию
+      tags:
+      - Transactions
+  /transactions/{id}:
+    get:
+      parameters:
+      - description: ID транзакции
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить транзакцию по ID
+      tags:
+      - Transactions
+  /users:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Получить список пользователей
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные пользователя
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+      security:
+      - BearerAuth: []
+      summary: Создать пользователя
+      tags:
+      - Users
+  /users/{id}:
+    delete:
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Удалить пользователя
+      tags:
+      - Users
+    get:
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Получить пользователя по ID
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID пользователя
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные пользователя
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      security:
+      - BearerAuth: []
+      summary: Обновить пользователя
+      tags:
+      - Users
+schemes:
+- https
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

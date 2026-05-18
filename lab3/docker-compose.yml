@@ -1,0 +1,12 @@
+services:
+  payment-auth-server:
+    build: .
+    container_name: payment-auth-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - payment_auth_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  payment_auth_data:
